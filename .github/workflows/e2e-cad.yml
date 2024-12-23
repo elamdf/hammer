@@ -1,0 +1,29 @@
+name: End-to-end CAD flow CI smoketest
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: [elam_amd2] # TODO: replace with something centrally admined
+
+    steps:
+      # Create a fresh temporary directory and run a command
+      - name: Run command in fresh temporary directory
+        run: |
+          # Create a temporary directory
+          TMP_DIR=$(mktemp -d)
+          echo "Temporary directory created at: $TMP_DIR"
+
+          # Navigate to the temporary directory
+          cd "$TMP_DIR"
+
+          # Run your command
+          echo "Running command in: $(pwd)"
+          echo "Hello, Self-Hosted Runner!" > test-output.txt
+
+          # Verify the output
+          cat test-output.txt
