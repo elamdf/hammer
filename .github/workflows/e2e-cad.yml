@@ -12,19 +12,36 @@ jobs:
     runs-on: [self-hosted] # TODO: replace with something centrally admined
 
     steps:
-      # Create a fresh temporary directory and run a command
-      - name: Run command in fresh temporary directory
+      # Step 1: Create a temporary directory
+      - name: Create temporary directory
         run: |
-          # Create a temporary directory
           TMP_DIR=$(mktemp -d)
           echo "Temporary directory created at: $TMP_DIR"
+          echo "TMP_DIR=$TMP_DIR" >> $GITHUB_ENV
 
-          # Navigate to the temporary directory
-          cd "$TMP_DIR"
+      # Step 2: Clone the repository into the temporary directory
+      - name: Clone the repository
+        run: |
+          git clone $GITHUB_REPOSITORY $TMP_DIR/repo
+        env:
+          GITHUB_REPOSITORY: https://github.com/${{ github.repository }}
 
-          # Run your command
-          echo "Running command in: $(pwd)"
-          echo "Hello, Self-Hosted Runner!" > test-output.txt
+      # Step 3: Check out the specific commit
+      - name: Check out the commit being tested
+        run: |
+          cd $TMP_DIR/repo
+          git fetch --depth=1 origin ${{ github.sha }}
+          git checkout ${{ github.sha }}
 
-          # Verify the output
-          cat test-output.txt
+      # Step 4: Navigate to the `vlsi` directory and run `make`
+      - name: Run `make` in the `vlsi` directory
+        run: |
+          cd $TMP_DIR/repo/e2e
+          make build
+
+      # Step 5: Clean up the temporary directory
+      - name: Clean up temporary directory
+        if: always() # Ensures this step always runs
+        run: |
+          echo "Cleaning up temporary directory: $TMP_DIR"
+          rm -rf $TMP_DIR
