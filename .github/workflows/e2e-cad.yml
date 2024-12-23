@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    runs-on: [elam_amd2] # TODO: replace with something centrally admined
+    runs-on: [self-hosted] # TODO: replace with something centrally admined
 
     steps:
       # Create a fresh temporary directory and run a command
