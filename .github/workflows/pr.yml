@@ -28,6 +28,8 @@ jobs:
           pr_number=${{github.event.number}}
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
           git fetch private "${branch_name}_pr_${pr_number}"
+          # TODO: why is this needed? private is never updated..
+          git config pull.rebase false
           git pull private ${branch_name}_pr_${pr_number}
           git status
           git push private "${branch_name}:${branch_name}_pr_${pr_number}" # create the branch if it doesn't exist, else push
