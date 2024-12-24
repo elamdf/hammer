@@ -22,7 +22,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }} 
           token:  ${{ secrets.PRIVATE_REPO_PAT }}
-      - uses: stefanzweifel/git-auto-commit-action@v5
 
       - name: Push branch to private
         run: |
@@ -33,7 +32,7 @@ jobs:
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
           git fetch private
           #git rebase --strategy-option=ours private/${branch_name}_pr_${pr_number}
-          git push private "${branch_name}:${branch_name}_pr_${pr_number}" # create the branch if it doesn't exist, else push
+          git push -f private "${branch_name}:${branch_name}_pr_${pr_number}" # create the branch if it doesn't exist, else push
           #git push private "${branch_name}:refs/heads/${branch_name}_pr_${pr_number}" || git push private "${branch_name}:${branch_name}_pr_${pr_number}" # create the branch if it doesn't exist, else push
   tests:
     runs-on: ubuntu-latest
