@@ -3,7 +3,7 @@ name: End-to-end CAD flow smoketests
 on:
   push:
     branches:
-      - main
+      - master
       - test-ci
       - sky130_pydantic
       - epic_branch
