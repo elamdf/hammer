@@ -18,25 +18,23 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Create branch in private repo
-      env:
-        GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
-      run: |
-        PR_NUMBER=${{ github.event.number }}
-        PR_BRANCH="pr-${PR_NUMBER}"
-        PRIVATE_REPO="elamdf/hammer-private-test"
+    - name: Sync Branch to Private Repository
+push:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        token:  ${{ secrets.PRIVATE_REPO_PAT }}
+    - name: setup git config
+    - run: |
+      git config user.name "GitHub Actions Bot"
+      git config user.email "tapeout@berkeley.edu"
+      branch_name=$(git rev-parse --abbrev-ref HEAD)
+      git remote add private $PRIVATE_HAMMER_REPO
+      git push private $branch_name
 
-        # Create the branch in the private repo
-        curl -X POST \
-          -H "Authorization: Bearer $PRIVATE_REPO_PAT" \
-          -H "Accept: application/vnd.github+json" \
-          https://api.github.com/repos/${PRIVATE_REPO}/git/refs \
-          -d @- <<EOF
-        {
-          "ref": "refs/heads/branch-name",
-          "sha": "base-commit-sha"
-        }
-        EOF
+
+
   # sky130-cm-e2e:
   #   runs-on: [self-hosted] # TODO: replace with something centrally admined
 
