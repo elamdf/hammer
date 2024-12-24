@@ -41,7 +41,7 @@ jobs:
           git fetch --unshallow
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
           echo "${branch_name}:${branch_name}_${pr_number}"
-          git push -u private "${branch_name}:${branch_name}_${pr_number}"
+          git push -u private "HEAD:${branch_name}_${pr_number}"
 
 
 
