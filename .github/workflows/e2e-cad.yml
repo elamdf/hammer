@@ -3,7 +3,7 @@ on: push
 
 jobs:
   sky130-cm:
-    runs-on: [self-hosted]
+    runs-on: [self-hosted,ubuntu-latest] # only private repo has a runner defined
     if: ${{vars.BWRC }} != '' # only run on bwrc runner, this variable is set in private repo
 
     steps:
