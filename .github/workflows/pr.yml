@@ -27,7 +27,7 @@ jobs:
           branch_name=${{ github.event.pull_request.head.ref }} 
           pr_number=${{github.event.number}}
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
-          git fetch private "${branch_name}_pr_${pr_number}"
+          # git fetch private "${branch_name}_pr_${pr_number}"
           # TODO: why is this needed? private is never updated.. pushing works locally but for some reason ci runs claim unrelated histories
           git push -f private "${branch_name}:${branch_name}_pr_${pr_number}" # create the branch if it doesn't exist, else push
           #git push private "${branch_name}:refs/heads/${branch_name}_pr_${pr_number}" || git push private "${branch_name}:${branch_name}_pr_${pr_number}" # create the branch if it doesn't exist, else push
