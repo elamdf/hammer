@@ -33,8 +33,6 @@ jobs:
           branch_name=$(git rev-parse --abbrev-ref HEAD)
           pr_number=${{github.event.number}}
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
-          echo $(git remote -v)
-          git fetch -a private
           git push private --no-thin $branch_name_$pr_number
 
 
