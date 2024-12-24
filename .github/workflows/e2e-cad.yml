@@ -6,6 +6,7 @@ on:
       - main
       - test-ci
       - sky130_pydantic
+      - epic_branch
   pull_request:
     types: [opened]
 
