@@ -26,6 +26,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
+          ref: ${{ github.ref }}
           token:  ${{ secrets.PRIVATE_REPO_PAT }}
       - name: Push branch to private
         run: |
