@@ -1,4 +1,5 @@
 test edit
+another one
 ![Logo design by @kenhoberkeley](https://github.com/ucb-bar/hammer/raw/master/doc/logo_transparent.png)
 
 ![Hammer PR CI](https://github.com/ucb-bar/hammer/actions/workflows/pr.yml/badge.svg?event=push) ![Hammer publish CI](https://github.com/ucb-bar/hammer/actions/workflows/publish.yml/badge.svg)
