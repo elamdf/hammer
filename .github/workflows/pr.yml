@@ -2,6 +2,8 @@ name: hammer-pr-ci
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, closed]
+
     branches:
       - master
   push:
@@ -12,6 +14,26 @@ env:
   POETRY_VERSION: "1.5.0"
 
 jobs:
+  copy-pr-branch-to-private: # for CAD tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }} 
+          token:  ${{ secrets.PRIVATE_REPO_PAT }}
+
+      - name: Push branch to private
+        run: |
+          git config user.name "BARtender"
+          git config user.email "tapeout@berkeley.edu" # todo rename, this is just elam's alias lol
+          branch_name=${{ github.event.pull_request.head.ref }} 
+          pr_number=${{github.event.number}}
+          git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
+          git fetch private
+          #git rebase --strategy-option=ours private/${branch_name}_pr_${pr_number}
+          git push -f private "${branch_name}:${branch_name}_pr_${pr_number}" # create the branch if it doesn't exist, else push
+          #git push private "${branch_name}:refs/heads/${branch_name}_pr_${pr_number}" || git push private "${branch_name}:${branch_name}_pr_${pr_number}" # create the branch if it doesn't exist, else push
   tests:
     runs-on: ubuntu-latest
     continue-on-error: true
@@ -47,6 +69,7 @@ jobs:
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
       - name: Create Poetry env
         if: steps.cached-venv.outputs.cache-hit != 'true'
         run: |
