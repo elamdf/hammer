@@ -22,13 +22,13 @@ jobs:
           token:  ${{ secrets.PRIVATE_REPO_PAT }}
       - name: Push branch to private
         run: |
-          git config user.name "BARTender"
+          git config user.name "BARtender"
           git config user.email "tapeout@berkeley.edu" # todo rename, this is just elam's alias lol
           branch_name=${{ github.event.pull_request.head.ref }} 
           pr_number=${{github.event.number}}
           git status
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
-          git fetch private
+          git pull private "${branch_name}_pr_${pr_number}"
           git push private "HEAD:refs/heads/${branch_name}_pr_${pr_number}"
   tests:
     runs-on: ubuntu-latest
