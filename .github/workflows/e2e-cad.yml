@@ -32,6 +32,7 @@ jobs:
           git config user.email "tapeout@berkeley.edu"
           branch_name=$(git rev-parse --abbrev-ref HEAD)
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
+          echo $(git remote -v)
           git fetch -a private
           git push private $branch_name
 
