@@ -12,6 +12,23 @@ env:
   POETRY_VERSION: "1.5.0"
 
 jobs:
+  copy-pr-branch-to-private: # for CAD tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          token:  ${{ secrets.PRIVATE_REPO_PAT }}
+      - name: Push branch to private
+        run: |
+          git config user.name "BARTender"
+          git config user.email "tapeout@berkeley.edu" # todo rename, this is just elam's alias lol
+          branch_name=${{ github.event.pull_request.head.ref }} 
+          pr_number=${{github.event.number}}
+          git fetch --unshallow
+          git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
+          git push -u private "HEAD:refs/heads/${branch_name}_pr_${pr_number}"
   tests:
     runs-on: ubuntu-latest
     continue-on-error: true
