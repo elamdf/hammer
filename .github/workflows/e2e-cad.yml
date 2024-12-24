@@ -35,8 +35,8 @@ jobs:
           pr_number=${{github.event.number}}
           git fetch --unshallow
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
-          echo "$branch_name:$branch_name_$pr_number"
-          git push -u private "$branch_name:$branch_name_$pr_number"
+          echo "$branch_name\:$branch_name_$pr_number"
+          git push -u private "$branch_name\:$branch_name_$pr_number"
 
 
 
