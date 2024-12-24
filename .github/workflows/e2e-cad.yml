@@ -29,13 +29,13 @@ jobs:
           token:  ${{ secrets.PRIVATE_REPO_PAT }}
       - name: Push branch to private
         run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "tapeout@berkeley.edu"
+          git config user.name "BARTender"
+          git config user.email "tapeout@berkeley.edu" # todo this is elam's alias lol
           branch_name=$(git rev-parse --abbrev-ref HEAD)
           pr_number=${{github.event.number}}
           git fetch --unshallow
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
-          git push private --no-thin $branch_name_$pr_number
+          git push private --no-thin $branch_name:$branch_name_$pr_number
 
 
 
