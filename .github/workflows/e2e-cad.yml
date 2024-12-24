@@ -22,10 +22,12 @@ jobs:
 push:
   runs-on: ubuntu-latest
   steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repo
+      uses: actions/checkout@v3
       with:
         token:  ${{ secrets.PRIVATE_REPO_PAT }}
-    - run: |
+    - name: Push branch to private
+      run: |
         git config user.name "GitHub Actions Bot"
         git config user.email "tapeout@berkeley.edu"
         branch_name=$(git rev-parse --abbrev-ref HEAD)
