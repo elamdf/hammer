@@ -4,7 +4,7 @@ on: push
 jobs:
   sky130-cm:
     runs-on: [self-hosted]
-    if: env.BWRC != '' # only run on bwrc runner, this variable is set in private repo
+    if: ${{vars.BWRC }} != '' # only run on bwrc runner, this variable is set in private repo
 
     steps:
         # Clone this repo
