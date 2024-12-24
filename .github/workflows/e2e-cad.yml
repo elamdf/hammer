@@ -35,6 +35,7 @@ jobs:
           git config user.email "tapeout@berkeley.edu" # todo this is elam's alias lol
           branch_name=${GITHUB_REF#refs/heads/}
           pr_number=${{github.event.number}}
+          echo ${GITHUB_REF}
           git fetch --unshallow
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
           echo "${branch_name}:${branch_name}_${pr_number}"
