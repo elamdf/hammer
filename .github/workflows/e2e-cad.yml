@@ -33,14 +33,15 @@ jobs:
         run: |
           git config user.name "BARTender"
           git config user.email "tapeout@berkeley.edu" # todo this is elam's alias lol
-          branch_name=$(git branch --show-current)
+          branch_name=${{ github.event.pull_request.head.ref }} 
           pr_number=${{github.event.number}}
+          echo $(git status)
           echo $branch_name
           echo ${GITHUB_REF}
           git fetch --unshallow
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
           echo "${branch_name}:${branch_name}_${pr_number}"
-          git push -u private "${branch_name}:${branch_name}_${pr_number}"
+          git push -u private "HEAD:refs/heads/${branch_name}_pr_${pr_number}"
 
 
 
