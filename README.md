@@ -1,4 +1,5 @@
 TEST CI RUN
+test
 test test
 
 ![Logo design by @kenhoberkeley](https://github.com/ucb-bar/hammer/raw/master/doc/logo_transparent.png)
@@ -18,6 +19,7 @@ Doc sources are available at `doc/` for offline reading.
 Hammer currently requires Python 3.9+.
 
 For a deeper dive into available options and environment configuration:
+
 
 * [Core Hammer settings](hammer/config/defaults.yml)
 * [Setup documentation](https://hammer-vlsi.readthedocs.io/en/latest/Hammer-Basics/Hammer-Setup.html)
