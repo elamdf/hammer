@@ -25,7 +25,6 @@ push:
     - uses: actions/checkout@v3
       with:
         token:  ${{ secrets.PRIVATE_REPO_PAT }}
-    - name: setup git config
     - run: |
         git config user.name "GitHub Actions Bot"
         git config user.email "tapeout@berkeley.edu"
