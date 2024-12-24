@@ -28,7 +28,7 @@ jobs:
           pr_number=${{github.event.number}}
           git status
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
-          git push private "HEAD:refs/heads/${branch_name}_pr_${pr_number}" || git push private HEAD:"${branch_name}_pr_${pr_number}" # create the branch if it doesn't exist, else push
+          git push private "HEAD:refs/heads/${branch_name}_pr_${pr_number}" || git push private ${branch_name}:"${branch_name}_pr_${pr_number}" # create the branch if it doesn't exist, else push
   tests:
     runs-on: ubuntu-latest
     continue-on-error: true
@@ -63,7 +63,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles() }}
       - name: Create Poetry env
         if: steps.cached-venv.outputs.cache-hit != 'true'
         run: |
