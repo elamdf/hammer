@@ -1,4 +1,5 @@
 TEST CI RUN
+test test
 
 ![Logo design by @kenhoberkeley](https://github.com/ucb-bar/hammer/raw/master/doc/logo_transparent.png)
 
