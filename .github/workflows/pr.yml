@@ -28,8 +28,7 @@ jobs:
           pr_number=${{github.event.number}}
           git status
           git remote add private ${{ vars.PRIVATE_HAMMER_REPO }}
-          git pull private "${branch_name}_pr_${pr_number}"
-          git push private "HEAD:refs/heads/${branch_name}_pr_${pr_number}"
+          git push private "HEAD:refs/heads/${branch_name}_pr_${pr_number}" || git push private "/${branch_name}_pr_${pr_number}" # create the branch if it doesn't exist, else push
   tests:
     runs-on: ubuntu-latest
     continue-on-error: true
